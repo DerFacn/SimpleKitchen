@@ -12,14 +12,12 @@ def create_app(config_obj=Config):
     db.init_app(app)
     
     from app import models
+    from app.presentation import register_routes
     
     @app.before_serving
     async def before_serving():
         await db.init_db()
-    
-    @app.route('/')
-    async def index():
-        client_addr = request.headers.get('X-Real-IP')
-        return {"message": "Hello World", "remote_addr": client_addr if client_addr else request.remote_addr}
+        
+    register_routes(app)
     
     return app
