@@ -1,0 +1,23 @@
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - ASYNC_DATABASE_URL=postgresql+asyncpg://kitchen:KitchenMasterPassword@db:5432/kitchen
+      - SYNC_DATABASE_URL=postgresql://kitchen:KitchenMasterPassword@db:5432/kitchen
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: kitchen
+      POSTGRES_PASSWORD: KitchenMasterPassword
+      POSTGRES_DB: kitchen
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
