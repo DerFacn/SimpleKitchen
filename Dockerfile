@@ -20,4 +20,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Quellcode kopieren
 COPY . .
 
+# Upgrading to the newest migration and running the service
+CMD ["alembic", "upgrade", "heads"]
 CMD ["uvicorn", "app:create_app", "--factory", "--host", "0.0.0.0", "--port", "5000"]
