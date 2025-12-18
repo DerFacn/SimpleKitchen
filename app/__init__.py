@@ -11,6 +11,9 @@ def create_app(config_obj=Config):
     
     db.init_app(app)
     
+    app.jinja_env.cache = {}
+    app.jinja_env.auto_reload = True
+    
     from app import models
     from app.presentation import register_routes
     
